@@ -1,0 +1,55 @@
+﻿@model IEnumerable<TelefonRehberi.Models.Calisanlar>
+
+@*@{
+    Layout = null;
+}*@
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Çalışanlar</title>
+</head>
+<body style="background-image: url('../../Content/startbootstrap-grayscale-gh-pages/img/bg-masthead.jpg');">
+    <p>
+        @Html.ActionLink("Ana Sayfa", "Index", "Yonetici")
+    </p>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Adi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Soyadi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TelefonNo)
+            </th>
+
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Adi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Soyadi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TelefonNo)
+                </td>
+                <td>
+                    @Html.ActionLink("Detay", "Details", new { id = item.CalisID }) 
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</body>
+</html>

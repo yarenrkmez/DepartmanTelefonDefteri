@@ -1,0 +1,29 @@
+﻿
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <body style="background-image: url('../../Content/startbootstrap-grayscale-gh-pages/img/despaired-2261021_1920.jpg');
+        background-size:cover;
+">
+        @Html.ActionLink("Ana Sayfa","Index","Yonetici")
+        <form method="post" action="SifremiUnuttum" role="form" style="padding-left:200px;padding-top:150px;width:500px">
+            <h1>Şifremi Değiştir</h1>
+
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email Girin:</label>
+                <input type="email" name="Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Gizli Soru Girin:</label>
+                <input  type="text" name="GizliSoru" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Sorunun Cevabını Girin:</label>
+                <input type="text" name="GizliCevap" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputPassword1">Yeni Şifre:</label>
+                <input type="password" name="Sifre" class="form-control" id="exampleInputPassword1">
+            </div>
+            <button type="submit" class="btn btn-primary">Şifremi Değiştir</button>
+        </form>
+    </body>

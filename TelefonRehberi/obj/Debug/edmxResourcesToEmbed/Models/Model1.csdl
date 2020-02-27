@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TelefonDefteriModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Calisanlar">
+    <Key>
+      <PropertyRef Name="CalisID" />
+    </Key>
+    <Property Name="CalisID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Soyadi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DepartmanID" Type="Int32" Nullable="false" />
+    <Property Name="TelefonNo" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Departmanlar" Relationship="Self.FK_Calisanlar_Departmanlar" FromRole="Calisanlar" ToRole="Departmanlar" />
+  </EntityType>
+  <EntityType Name="Departmanlar">
+    <Key>
+      <PropertyRef Name="DepartmanID" />
+    </Key>
+    <Property Name="DepartmanID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DepAdi" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="YoneticiID" Type="Int32" />
+    <Property Name="DepartmanBilgi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Calisanlars" Relationship="Self.FK_Calisanlar_Departmanlar" FromRole="Departmanlar" ToRole="Calisanlar" />
+    <NavigationProperty Name="Yonetici" Relationship="Self.FK_Departmanlar_Yonetici" FromRole="Departmanlar" ToRole="Yonetici" />
+    <NavigationProperty Name="Yonetici1" Relationship="Self.FK_Departmanlar_Yonetici1" FromRole="Departmanlar" ToRole="Yonetici" />
+    <NavigationProperty Name="Yoneticis" Relationship="Self.FK_Yonetici_Departmanlar" FromRole="Departmanlar" ToRole="Yonetici" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Yonetici">
+    <Key>
+      <PropertyRef Name="YoneticiID" />
+    </Key>
+    <Property Name="YoneticiID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Soyadi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DepartmanID" Type="Int32" Nullable="false" />
+    <Property Name="TelefonNo" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Sifre" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="GizliSoru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="GizliCevap" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Departmanlars" Relationship="Self.FK_Departmanlar_Yonetici" FromRole="Yonetici" ToRole="Departmanlar" />
+    <NavigationProperty Name="Departmanlars1" Relationship="Self.FK_Departmanlar_Yonetici1" FromRole="Yonetici" ToRole="Departmanlar" />
+    <NavigationProperty Name="Departmanlar" Relationship="Self.FK_Yonetici_Departmanlar" FromRole="Yonetici" ToRole="Departmanlar" />
+  </EntityType>
+  <Association Name="FK_Calisanlar_Departmanlar">
+    <End Role="Departmanlar" Type="Self.Departmanlar" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Calisanlar" Type="Self.Calisanlar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departmanlar">
+        <PropertyRef Name="DepartmanID" />
+      </Principal>
+      <Dependent Role="Calisanlar">
+        <PropertyRef Name="DepartmanID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Departmanlar_Yonetici">
+    <End Role="Yonetici" Type="Self.Yonetici" Multiplicity="0..1" />
+    <End Role="Departmanlar" Type="Self.Departmanlar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Yonetici">
+        <PropertyRef Name="YoneticiID" />
+      </Principal>
+      <Dependent Role="Departmanlar">
+        <PropertyRef Name="YoneticiID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Departmanlar_Yonetici1">
+    <End Role="Yonetici" Type="Self.Yonetici" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Departmanlar" Type="Self.Departmanlar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Yonetici">
+        <PropertyRef Name="YoneticiID" />
+      </Principal>
+      <Dependent Role="Departmanlar">
+        <PropertyRef Name="YoneticiID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Yonetici_Departmanlar">
+    <End Role="Departmanlar" Type="Self.Departmanlar" Multiplicity="1" />
+    <End Role="Yonetici" Type="Self.Yonetici" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departmanlar">
+        <PropertyRef Name="DepartmanID" />
+      </Principal>
+      <Dependent Role="Yonetici">
+        <PropertyRef Name="DepartmanID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TelefonDefteriEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Calisanlars" EntityType="Self.Calisanlar" />
+    <EntitySet Name="Departmanlars" EntityType="Self.Departmanlar" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Yoneticis" EntityType="Self.Yonetici" />
+    <AssociationSet Name="FK_Calisanlar_Departmanlar" Association="Self.FK_Calisanlar_Departmanlar">
+      <End Role="Departmanlar" EntitySet="Departmanlars" />
+      <End Role="Calisanlar" EntitySet="Calisanlars" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Departmanlar_Yonetici" Association="Self.FK_Departmanlar_Yonetici">
+      <End Role="Yonetici" EntitySet="Yoneticis" />
+      <End Role="Departmanlar" EntitySet="Departmanlars" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Departmanlar_Yonetici1" Association="Self.FK_Departmanlar_Yonetici1">
+      <End Role="Yonetici" EntitySet="Yoneticis" />
+      <End Role="Departmanlar" EntitySet="Departmanlars" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Yonetici_Departmanlar" Association="Self.FK_Yonetici_Departmanlar">
+      <End Role="Departmanlar" EntitySet="Departmanlars" />
+      <End Role="Yonetici" EntitySet="Yoneticis" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(TelefonDefteriModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(TelefonDefteriModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>

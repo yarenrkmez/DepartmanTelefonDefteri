@@ -1,0 +1,60 @@
+﻿@model TelefonRehberi.Models.Calisanlar
+
+@{
+    
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>
+        Çalışanın Detayı:@Html.DisplayFor(model => model.Adi)   @Html.DisplayFor(model => model.Soyadi)
+    </title>
+</head>
+<body style="background-image: url('../../Content/startbootstrap-grayscale-gh-pages/img/bg-masthead.jpg');">
+    <div class="dl-horizontal">
+        <h1>Çalışanlar</h1>
+        <hr />
+    </div>
+
+    <div class="card-body" style="padding-left:470px;padding-top:140px;font-size:20px">
+
+
+
+        @Html.Label("Çalışanın Adı:")
+
+
+        @Html.DisplayFor(model => model.Adi)
+        <br />
+
+
+        @Html.Label("Çalışanın Soyadı:")
+        @Html.DisplayFor(model => model.Soyadi)
+        <br />
+
+        @Html.Label("Çalışanın Telefon Numarası:")
+        @Html.DisplayFor(model => model.TelefonNo)
+        <br />
+
+
+
+        @Html.Label("ÇAlışanın Çalıştığı Departman Adı:")
+
+
+
+        @Html.DisplayFor(model => model.Departmanlar.DepAdi)
+
+
+        <p>
+            @Html.ActionLink("Çalışan Listesine Geri Dön", "Index")
+            <br />
+            @Html.ActionLink("Ana Sayfa", "Index", "Yonetici")
+        </p>
+    </div>
+
+</body>
+</html>

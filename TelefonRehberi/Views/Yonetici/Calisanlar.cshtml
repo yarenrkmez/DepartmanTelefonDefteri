@@ -1,0 +1,95 @@
+﻿@model  TelefonRehberi.App_Classes.CalisanlarDepartman
+
+@{
+    var id = ViewData["departmanid"];
+}
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+       $(document).ready(function myfunction() {
+        $(".KisiSil").click(function KisiSil() {
+            var Cid = $(this).attr("name");
+            alert(Cid);
+            $.ajax({
+                type: "Post",
+                url: "/Yonetici/CalisanSil",
+                data: { id: Cid },
+                success: function myfunction() {
+                    alert("success");
+                         window.location.replace("/Yonetici/Index");
+                },
+                error: function myfunction() {
+                     alert("error");
+                }
+            });
+        });
+    });
+
+</script>
+
+<div class="container Calisanlar" style="background-color:darkgray;opacity:0.8">
+    <div class="row">
+        <div class="col-sm">
+            Adi
+        </div>
+        <div class="col-sm">
+            Soyadi
+        </div>
+        <div class="col-sm">
+            Telefon Numarası
+        </div>
+        <div class="col-sm">
+            Çalıştığı Departman
+        </div>
+        <div class="col-sm">
+            Çalışanı Güncelle
+        </div>
+        <div class="col-sm">
+            Çalışanı Sil
+        </div>
+    </div>
+    @foreach (var item in Model.calisanlars)
+    {
+
+        <div class="row">
+            <div class="col-sm">
+                @item.Adi
+            </div>
+            <div class="col-sm">
+                @item.Soyadi
+            </div>
+            <div class="col-sm">
+                @item.TelefonNo
+            </div>
+            <div class="col-sm">
+                @item.Departmanlar.DepAdi
+            </div>
+            @if (@item.Departmanlar.DepartmanID == Convert.ToInt32(@id) )
+            {
+                <div class="col-sm">
+                    <a class="btn btn-danger" href="Yonetici/Guncelle/@item.CalisID" >Güncelle</a>
+                </div>
+                <div class="col-sm">
+                    <a class="btn btn-danger KisiSil" name="@item.CalisID">Sil</a>
+
+                </div>
+            }
+                else
+                {
+                <div class="col-sm" style="color:red">
+                    Yetki Yok
+                </div>
+                <div class="col-sm" style="color:red">
+                    Yetki Yok
+                </div>
+            }
+
+        </div>
+
+
+
+
+
+    }
+</div>
+
+

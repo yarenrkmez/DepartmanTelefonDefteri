@@ -1,0 +1,76 @@
+﻿@model  TelefonRehberi.App_Classes.CalisanlarDepartman
+
+@{
+    var id = ViewData["departmanid"];
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+       $(document).ready(function myfunction() {
+        $(".DepSil").click(function DepSil() {
+            var Cid = $(this).attr("name");
+            alert(Cid);
+            $.ajax({
+                type: "Post",
+                url: "/Yonetici/DepSil",
+                data: { id: Cid },
+                success: function myfunction() {
+                    //alert("success");
+                         window.location.replace("/Yonetici/Index");
+                },
+                error: function myfunction() {
+                     alert("error");
+                }
+            });
+        });
+    });
+
+</script>
+
+<div class="container Calisanlar" style="background-color:darkgray;opacity:0.8">
+    <div class="row">
+        <div class="col-sm">
+           Departman Adı
+        </div>
+        <div class="col-sm">
+           Departman Bilgisi
+        </div>
+    
+        <div class="col-sm">
+            Departmanı Güncelle
+        </div>
+        <div class="col-sm">
+            Departmanı Sil
+        </div>
+    </div>
+    @foreach (var item in Model.departmanlars)
+    {
+
+        <div class="row">
+            <div class="col-sm">
+                @item.DepAdi
+            </div>
+            <div class="col-sm">
+                @item.DepartmanBilgi
+            </div>
+        
+                <div class="col-sm">
+                    <a class="btn btn-danger" href="DepGuncelle/@item.DepartmanID">Güncelle</a>
+                </div>
+                <div class="col-sm">
+                    <a class="btn btn-danger DepSil" name="@item.DepartmanID">Sil</a>
+
+                </div>
+          
+       
+
+        </div>
+
+
+
+
+
+    }
+</div>
+
+
+

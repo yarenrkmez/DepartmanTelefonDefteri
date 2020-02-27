@@ -1,0 +1,40 @@
+﻿
+@{
+    var id = ViewData["Depid"];
+
+}
+@model IEnumerable<TelefonRehberi.Models.Departmanlar>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<body style="background-image: url('../../Content/startbootstrap-grayscale-gh-pages/img/despaired-2261021_1920.jpg');
+background-size:cover;
+">
+    <div class="" style="        width: 700px;
+        height: 300px;
+        padding-left: 300px;
+        padding-top: 100px;
+">
+        @Html.ActionLink("İşlemden Vazgeç", "Index", "Yonetici")
+
+        @foreach (var item in Model)
+        {
+            if (item.DepartmanID == Convert.ToInt32(id))
+            {
+                <form method="post" action="@item.DepartmanID" role="form">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Departman Adı</label>
+                        <input type="text" name="DepAdi" value="@item.DepAdi" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Departman Bilgi </label>
+                        <input type="text" value="@item.DepartmanBilgi" name="DepartmanBilgi" class="form-control" id="exampleInputEmail1">
+                    </div>
+                    @*<input name="@item.CalisID" value="@item.CalisID"  hidden/>*@
+                    <button type="submit" class="btn btn-primary">Güncelle</button>
+
+                </form>
+            }
+        }
+
+    </div>
+</body>

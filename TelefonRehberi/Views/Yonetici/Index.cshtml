@@ -1,0 +1,150 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@{
+    var id = ViewData["departmanid"];
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<script>
+    $(document).ready(function myfunction() {
+        $(".SifreDegistir").click(function SifreDegistir() {
+            var Yid = $(this).attr("name");
+            alert(Yid);
+            var ySifre = document.getElementById("yenisif").value;
+            alert(ySifre);
+             var Yonetici = {
+                 Sifre: ySifre,
+            }
+
+
+            $.ajax({
+                url: '@Url.Action("SifreDegistir", "Yonetici")',
+                type: 'POST',
+                dataType: 'json',
+                data: Yonetici,
+                success: function (data) {
+                    alert(data);
+                }
+            });
+
+        });
+       
+    });
+
+</script>
+@if (User.Identity.IsAuthenticated)
+{
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">    @User.Identity.Name</a>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" onclick="openForm()">Çalışan Ekle</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" onclick="openForm2()">Departman Ekle</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="Yonetici/CikisYap">Çıkış Yap</a>
+                    </li>
+                    <li class="nav-item" style="padding-top:23px">
+                        <input class="input-group-text " placeholder="Yeni Şifre" type="password" id="yenisif " name="Sifre" />
+                    </li>
+                    <li class="nav-item">
+
+                        <a class="nav-link js-scroll-trigger SifreDegistir" name="@User.Identity.Name">Şifremi Değiştir</a>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+}
+<br />
+<br />
+<br />
+<br />
+<div class="form-popup" id="calisanEkle" style="display:none">
+
+    <form method="post" action="Yonetici/CalisanEkle" role="form">
+        <h3>Çalışan  Ekle</h3>
+
+        <label><b>Adı</b></label>
+        <input type="text" name="Adi" required>
+
+        <label><b>Soyadı</b></label>
+        <input type="text" name="Soyadi" required>
+
+        <label><b>Telefon Numarası</b></label>
+        <input type="text" name="TelefonNo" required>
+
+        <input type="text" name="DepartmanID" value="@id" hidden>
+
+
+
+        <button type="submit" class="btn">Kaydet</button>
+        <button type="button" class="btn cancel" onclick="closeForm()">Formu kapat</button>
+    </form>
+</div>
+@*@{ 
+   
+        TelefonRehberi.Models.TelefonDefteriEntities db = new TelefonRehberi.Models.TelefonDefteriEntities();
+        TelefonRehberi.Models.Yonetici y =db.Yoneticis.FirstOrDefault(x => x.Email == User.Identity.Name);
+
+        var YoneticiID = y.YoneticiID;
+    
+
+
+}*@
+<div class="form-popup" id="DepEkle" style="display:none">
+
+    <form method="post" action="DepEkle" role="form">
+        <h3>Departman Ekle</h3>
+
+        <label><b>Departman Adı:</b></label>
+        <input type="text" name="DepAdi" required>
+
+        <label><b>Departman Bilgi:</b></label>
+        <input type="text" name="DepartmanBilgi" required>
+     
+    @*<input type="text" value="@YoneticiID" name="YoneticiID" hidden>*@
+      
+        
+      
+        <button type="submit" class="btn">Ekle</button>
+        <button type="button" class="btn cancel" onclick="closeForm2()">Formu kapat</button>
+    </form>
+</div>
+<br />
+<br />
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    @Html.Partial("Calisanlar")
+    <br />
+    @Html.Partial("Departmanlar")
+}
+
+
+<script>
+    function openForm() {
+        document.getElementById("calisanEkle").style.display = "block";
+    }
+
+    function closeForm() {
+        document.getElementById("calisanEkle").style.display = "none";
+    }
+    function openForm2() {
+        document.getElementById("DepEkle").style.display = "block";
+    }
+
+    function closeForm2() {
+        document.getElementById("DepEkle").style.display = "none";
+    }
+</script>

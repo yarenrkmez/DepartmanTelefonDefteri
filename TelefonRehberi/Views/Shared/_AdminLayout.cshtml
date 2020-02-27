@@ -1,0 +1,190 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>ADMİN GİRİŞ</title>
+
+    <!-- Bootstrap core CSS -->
+
+    <link href="~/Content/startbootstrap-grayscale-gh-pages/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Custom fonts for this template -->
+
+    <link href="~/Content/startbootstrap-grayscale-gh-pages/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link href="~/Content/startbootstrap-grayscale-gh-pages/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+
+    <link href="~/Content/startbootstrap-grayscale-gh-pages/css/grayscale.min.css" rel="stylesheet" />
+
+</head>
+
+<body id="page-top">
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script>
+
+       $(document).ready(function myfunction() {
+        $(".departman").click(function departman() {
+            var depBilgi = $(this).attr("name");
+            var depAdi = $(this).attr("data-adi");
+            var yoneticiAdi=$(this).attr("data-yoneticiid");
+          var yoneticiSoyadi=$(this).attr("data-yoneticiSoyad");
+
+  document.getElementById("departmanBilgi").innerHTML ="Seçilen Departman:"+depAdi+" ," +"Departman bilgisi:"+depBilgi+" Yönetici:"+yoneticiAdi+" "+yoneticiSoyadi ;
+        });
+    });
+
+          $(document).ready(function myfunction() {
+        $(".Yonetici").click(function YoneticiAdi() {
+            var Ysoyadi = $(this).attr("name");
+            var Yadi = $(this).attr("data-adi");
+            var departman = $(this).attr("data-departman");
+              var telno=$(this).attr("data-telno");
+            document.getElementById("YoneticiBilgi").innerHTML = "Seçilen Yönetici: " +
+                Yadi + " " + Ysoyadi + ", Departmanı:" + departman+" Telefon Numarası: "+telno;
+        });
+    });
+
+
+</script>
+
+
+    <!-- Header -->
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" href="#page-top">Telefon Defteri</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="#Admin">Admin Giriş</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="@Url.Action("Index", "Public")">Çalışanlar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="#Departmanlar">Departmanlar ve Yöneticiler</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <header class="masthead" id="Admin">
+            <div class="container d-flex h-100 align-items-center">
+                <div class="mx-auto text-center">
+                    <form method="post" @*action="GirisYap"*@ action="@Url.Action("GirisYap", "Yonetici")" role="form">
+                        <h3 style="color:white">Telefon Defteri Admin Girişi</h3>
+                        <div class="form-group">
+
+                            <input type="email" name="Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email Girin">
+                        </div>
+                        <div class="form-group">
+
+                            <input type="password" name="Sifre" class="form-control" id="exampleInputPassword1" placeholder="Şifrenizi Girin">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Giriş</button>
+                        @Html.ActionLink("SifremiUnuttum","SifremiUnuttum","Yonetici")
+                    </form>
+                </div>
+            </div>@RenderBody()
+        <div class="masthead" id="Departmanlar">
+            <div class="row">
+                <div class="col-6">
+                    <div class="dropdown ">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Departman Seç
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            @foreach (var item in Model.departmanlars)
+                            {
+                                <p class="dropdown-item departman" data-yoneticiSoyad="@item.Yonetici.Soyadi" data-yoneticiid="@item.Yonetici.Adi" data-adi="@item.DepAdi" name="@item.DepartmanBilgi">@item.DepAdi</p>
+                             
+                            }
+                        
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+
+                    <div class="dropdown ">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Yönetici Seç
+                        </button>
+             
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        @foreach (var item in Model.yoneticis)
+                        {
+                            <p class="dropdown-item Yonetici" data-telno="@item.TelefonNo" data-departman="@item.Departmanlar.DepAdi" data-adi="@item.Adi" name="@item.Soyadi">@item.Email</p>
+                      
+                        }
+                  
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <p style="color:white" id="departmanBilgi"></p>
+            </div>
+            <div>
+                <p style="color:white" id="YoneticiBilgi"></p>
+            </div>
+        </div>
+
+        </header>
+
+
+
+
+
+    }
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="masthead" id="Calisanlar">
+            @RenderBody()
+        </div>
+    }
+    <!-- Footer -->
+    <footer class="bg-black small text-center text-white-50">
+        <div class="container">
+            Copyright &copy; Your Website 2019
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="~/Content/startbootstrap-grayscale-gh-pages/vendor/jquery/jquery.min.js"></script>
+
+    <script src="~/Content/startbootstrap-grayscale-gh-pages/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+
+    <script src="~/Content/startbootstrap-grayscale-gh-pages/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="~/Content/startbootstrap-grayscale-gh-pages/js/grayscale.min.js"></script>
+
+</body>
+
+</html>
